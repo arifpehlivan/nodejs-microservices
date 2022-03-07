@@ -14,6 +14,10 @@ app.get("/", (req,res)=>{
     res.send("Books");
 });
 
+app.post("/book", (req,res)=>{
+    res.send("Books");
+});
+
 app.listen(4545, ()=>{
     console.log("Running books service");
 });
