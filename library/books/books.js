@@ -44,6 +44,14 @@ app.get("/books", (req,res)=>{
     })
 });
 
+app.get("/book/:id", (req,res)=>{
+    Book.findById(req.params.id).then((book)=>{
+        res.json(book);
+    }).catch((err)=>{
+        console.log(err);
+    })
+})
+
 app.listen(4545, ()=>{
     console.log("Running books service");
 });
