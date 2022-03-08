@@ -36,6 +36,14 @@ app.post("/book", (req,res)=>{
     res.send(book);
 });
 
+app.get("/books", (req,res)=>{
+    Book.find().then((books)=>{
+        res.json(books);
+    }).catch((err)=>{
+        console.log(err);
+    })
+});
+
 app.listen(4545, ()=>{
     console.log("Running books service");
 });
