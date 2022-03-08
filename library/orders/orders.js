@@ -38,7 +38,7 @@ app.get("/order/:id", (req,res)=>{
             axios.get("http://localhost:5555/customer/" + order.CustomerID).then((response)=>{
                 const orderObject={customerName:response.data.name, bookTitle:""}
                 axios.get("http://localhost:4545/book/" + order.BookID).then((response)=>{
-                    orderObject.bookTitle=response.data.bookTitle;
+                    orderObject.bookTitle=response.data.title;
                     res.json(orderObject);
                 })
             })

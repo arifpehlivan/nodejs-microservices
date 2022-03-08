@@ -31,6 +31,14 @@ app.post("/customer", (req,res)=>{
     });
 })
 
+app.get("/customer/:id", (req,res)=>{
+    Customer.findById(req.params.id).then((customer)=>{
+        res.json(customer);
+    }).catch((err)=>{
+        console.log(err);
+    })
+});
+
 app.listen("5555", ()=>{
     console.log("Customers service");
 });
