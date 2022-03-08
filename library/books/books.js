@@ -2,8 +2,13 @@ const express=require("express");
 const app=express();
 const mongoose=require("mongoose");
 const dotenv=require("dotenv");
+const bodyParser=require("body-parser");
 
 dotenv.config();
+app.use(bodyParser.json());
+
+require("./Book");
+const Book=mongoose.model("Book");
 
 mongoose.connect(process.env.MONGODB, ()=>{
     console.log("Db connected");
@@ -11,11 +16,24 @@ mongoose.connect(process.env.MONGODB, ()=>{
 
 
 app.get("/", (req,res)=>{
-    res.send("Books");
+    res.send("Book service");
 });
 
 app.post("/book", (req,res)=>{
-    res.send("Books");
+    const newBook={
+        title:req.body.title,
+        author:req.body.author,
+        numberPages:req.body.numberPages,
+        publisher:req.body.publisher
+    }
+
+    const book=new Book(newBook);
+    book.save().then(()=>{
+        console.log("New book created.");
+    }).catch((err)=>{
+        console.log(err);
+    });
+    res.send(book);
 });
 
 app.listen(4545, ()=>{
