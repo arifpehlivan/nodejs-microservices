@@ -3,6 +3,7 @@ const app=express();
 const bodyParser=require("body-parser");
 const mongoose=require("mongoose");
 const dotenv=require("dotenv");
+const axios=require("axios");
 
 app.use(bodyParser.json());
 
@@ -29,7 +30,24 @@ app.post("/order", (req,res)=>{
         console.log(err);
     })
 
-})
+});
+
+app.get("/order/:id", (req,res)=>{
+    Order.findById(req.params.id).then((order)=>{
+        if(order){
+            axios.get("http://localhost:5555/customer/" + order.CustomerID).then((response)=>{
+                const orderObject={customerName:response.data.name, bookTitle:""}
+                axios.get("http://localhost:4545/book/" + order.BookID).then((response)=>{
+                    orderObject.bookTitle=response.data.bookTitle;
+                    res.json(orderObject);
+                })
+            })
+        } else{
+            res.send("Invalid Order");
+        }
+    })
+    
+});
 
 app.listen(7777, ()=>{
     console.log("Orders service");

@@ -50,7 +50,7 @@ app.get("/book/:id", (req,res)=>{
     }).catch((err)=>{
         console.log(err);
     })
-})
+});
 
 app.listen(4545, ()=>{
     console.log("Running books service");
